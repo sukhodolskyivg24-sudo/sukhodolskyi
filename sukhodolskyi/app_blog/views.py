@@ -4,24 +4,17 @@ from django.views.generic import TemplateView, ListView, DateDetailView
 from .models import Article, Category
 
 
+
+
 class HomePageView(ListView):
-    model = Article
+    model = Category
     template_name = 'index.html'
     context_object_name = 'categories'
 
     def get_context_data(self, **kwargs):
-        context = super(HomePageView, 
-                self).get_context_data(**kwargs)
-        context['articles'] =\
-           Article.objects.filter(main_page=True)[:5]
-
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Article.objects.filter(main_page=True)[:5]
         return context
-
-    def get_queryset(self, *args, **kwargs):
-        categories = Category.objects.all()
-
-        return categories
-
 
 
 class ArticleDetail(DateDetailView):
